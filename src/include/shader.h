@@ -60,6 +60,13 @@ Shader Shader_create_program(const char *vertex, const char *fragment) {
     return shader;
 }
 
+void Shader_set_uniform_vec3(Shader shader, const char *name, Vector3 value) {
+    glUseProgram(shader.program);
+    GLuint location = glGetUniformLocation(shader.program, name);
+    glUniform3f(location, value[0], value[1], value[2]);
+    glUseProgram(0);
+}
+
 void Shader_set_uniform_mat4(Shader shader, const char *name, Matrix4 value) {
     glUseProgram(shader.program);
     GLuint location = glGetUniformLocation(shader.program, name);

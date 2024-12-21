@@ -1,16 +1,19 @@
 #version 410 core
 
-layout (location = 0) in vec3 aPosition;
+layout (location = 0) in vec3 a_position;
+layout (location = 2) in vec3 a_normal;
+layout (location = 1) in vec2 a_uv_coord;
 
-out vec4 fizz;
+out vec2 uv_coord;
+out vec3 normal;
 
+uniform vec3 uCameraPosition;
 uniform mat4 uTransform;
 uniform mat4 uProjection;
 uniform mat4 uView;
 
 void main() {
-    // gl_Position = uTransform * vec4(aPosition, 1.0);
-    gl_Position = uProjection * uView * uTransform * vec4(aPosition.xy, 1.0, 1.0);
-
-    fizz = gl_Position;
+    uv_coord = a_uv_coord;
+    normal = a_normal;
+    gl_Position = uProjection * uView * uTransform * vec4(a_position - uCameraPosition, 1.0);
 }
